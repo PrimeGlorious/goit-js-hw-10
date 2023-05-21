@@ -21,7 +21,7 @@ function onInputText(e) {
   API.fetchCountries(e.target.value.trim())
     .then(countries => renderCountriesList(countries))
     .catch(error => console.log(error), countryListReset());
-}
+};
 
 function renderCountriesList(countries) {
   countryListReset();
@@ -57,9 +57,9 @@ function renderCountriesList(countries) {
     }
   }).join('');
    refs.countryInfo.insertAdjacentHTML('beforeend', markupInfo);
-}
+};
 
 function countryListReset() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
-}
+};
