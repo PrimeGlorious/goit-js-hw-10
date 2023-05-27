@@ -1,7 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
-import API from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -18,9 +18,17 @@ function onInputText(e) {
     return (countryListReset());
   }
 
-  API.fetchCountries(e.target.value.trim())
-    .then(countries => renderCountriesList(countries))
-    .catch(error => console.log(error), countryListReset());
+  fetchCountries(e.target.value.trim())
+    .then(r => {
+      renderCountriesList(r);
+    })
+    .catch(error => {
+      if (error.message === '404') {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+        countryListReset()
+      }
+      console.log(error);
+    });
 };
 
 function renderCountriesList(countries) {
